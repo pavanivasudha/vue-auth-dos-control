@@ -13,6 +13,7 @@
       <button type="submit">Login</button>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
     </form>
+    <button type="button" v-on:click="signup">Signup</button>
   </div>
 </template>
 
@@ -41,6 +42,10 @@ export default {
       } else {
         this.errorMessage = "Invalid username or password";
       }
+    },
+    signup() {
+      // Redirect to the signup page (SignPage)
+      this.$router.push({ name: "SignPage" });
     },
   },
 };

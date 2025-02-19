@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/LoginPage.vue";
 import Dashboard from "../views/DashboardPage.vue";
+import SignPage from "../views/SignPage.vue";
 
 const routes = [
   { path: "/", redirect: "/login" },
@@ -10,6 +11,11 @@ const routes = [
     name: "Dashboard",
     component: Dashboard,
     meta: { requiresAuth: true }, // Meta property to mark this route as protected
+  },
+  {
+    path: "/SignPage",
+    name: "SignPage",
+    component: SignPage,
   },
 ];
 
