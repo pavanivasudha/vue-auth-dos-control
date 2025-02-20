@@ -39,7 +39,7 @@ export default {
         console.log(data);
 
         if (!response.ok) {
-          throw new Error(data.message || "Signup failed");
+          throw new Error(data.message || "Signupfailed");
         }
       } catch (error) {
         console.error("Error signing up:", error);
