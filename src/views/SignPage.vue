@@ -1,22 +1,18 @@
 <template>
   <div>
-    <label for="username">Username </label>
-    <input
-      type="username"
-      id="username"
-      v-model="username"
-      required
-    /><br /><br />
+    <label for="username">Username</label>
+    <input type="text" id="username" v-model="username" required /><br /><br />
   </div>
   <div>
-    <label for="password">Password </label>
+    <label for="password">Password</label>
     <input type="password" id="password" v-model="password" required />
   </div>
   <button type="button" v-on:click="signup">Signup</button>
+
+  <p v-if="errorMessage" style="color: red">{{ errorMessage }}</p>
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -28,13 +24,26 @@ export default {
   methods: {
     async signup() {
       try {
-        const response = await axios.post("http://localhost:8000", {
-          username: this.username,
-          password: this.password,
+        const response = await fetch("/.netlify/functions/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: this.username, // Use user input
+            password: this.password,
+          }),
         });
-        console.log(response.data);
+
+        const data = await response.json(); // Properly parse response
+        console.log(data);
+
+        if (!response.ok) {
+          throw new Error(data.message || "Signup failed");
+        }
       } catch (error) {
         console.error("Error signing up:", error);
+        this.errorMessage = error.message;
       }
     },
   },
